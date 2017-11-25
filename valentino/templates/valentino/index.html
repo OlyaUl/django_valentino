@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Valetino spider</title>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
-
+<div style="width: 50%; margin: 10% 25%;">
+    <h1>Start Spiders</h1><br>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="spider">Spider:</label>
+            <select name="spider" class="form-control" id="spider" >
+                <option value="valent">Valent</option>
+            </select>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="url">Url:</label>
+            <input type="text" class="form-control"  id="url">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success" style="width: 100%">Start spider</button>
+    </form>
+</div>
 </body>
 </html>
