@@ -8,6 +8,9 @@
 #     http://doc.scrapy.org/en/latest/topics/settings.html
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
+import os
+import sys
+import django
 
 BOT_NAME = 'valentino_scrapy'
 
@@ -15,11 +18,16 @@ SPIDER_MODULES = ['valentino_scrapy.spiders']
 NEWSPIDER_MODULE = 'valentino_scrapy.spiders'
 
 
+script_path = os.path.join(os.path.dirname(os.path.abspath('.')))
+sys.path.append(script_path)
+os.environ['DJANGO_SETTINGS_MODULE'] = 'django_valentino.settings'
+django.setup()
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'valentino_scrapy (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -44,6 +52,7 @@ ROBOTSTXT_OBEY = True
 #   'Accept-Language': 'en',
 #}
 
+
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
@@ -62,6 +71,14 @@ ROBOTSTXT_OBEY = True
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 #}
 
+
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# Ensure all spiders share same duplicates filter through redis.
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+ITEM_PIPELINES = {
+    'scrapy_redis.pipelines.RedisPipeline': 300,
+'valentino_scrapy.pipelines.ValentinoScrapyPipeline': 300,
+}
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
