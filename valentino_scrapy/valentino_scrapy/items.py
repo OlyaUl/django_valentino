@@ -15,21 +15,16 @@ class ValentinoItem(scrapy.Item):
 
 
 class ValentinoProduct(scrapy.Item):
-    site_product_id = scrapy.Field()
     name = scrapy.Field()
     model = scrapy.Field()
     category = scrapy.Field()
     description = scrapy.Field()
     material = scrapy.Field()
-    made_in = scrapy.Field()
     url = scrapy.Field()
     image = scrapy.Field()
     site = scrapy.Field()
-
-
-class ValentinoPrice(scrapy.Item):
-    site_product_id = scrapy.Field()
     date = scrapy.Field()
-    params = scrapy.Field()
-    stock = scrapy.Field()
     currency = scrapy.Field()
+    price = scrapy.Field()
+    size = scrapy.Field()
+    sale_price = scrapy.Field()

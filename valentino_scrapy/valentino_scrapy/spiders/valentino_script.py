@@ -1,7 +1,7 @@
 import scrapy
 from datetime import date
 
-from valentino_scrapy.items import ValentinoProduct, ValentinoPrice
+from valentino_scrapy.items import ValentinoProduct # , ValentinoPrice
 from scrapy_redis.spiders import RedisSpider
 
 
@@ -36,7 +36,7 @@ class MySpider(RedisSpider):
 
     def get_item(self, response):
         product = ValentinoProduct()
-        price = ValentinoPrice()
+        # price = ValentinoPrice()
         product['name'] = response.xpath(
             '//h1[@class="item-name"]/div/span[@class="value"]/text()'
         ).extract_first()#.strip()
@@ -48,21 +48,17 @@ class MySpider(RedisSpider):
 
         product['category'] = response.meta['categories']
 
-        product['description'] = response.xpath(
+        description = response.xpath(
             '//div[@class="attributesUpdater editorialdescription "]/span[@class="value"]'
         ).extract_first()  # .strip()
 
+        description = str(description).replace('<br>', '')
+        product['description'] = str(description).replace('\\n', '')
         product['url'] = response.url
-
         product['image'] = response.css('div.mainImage ul.alternativeImages img::attr(srcset)').extract()
-
         product['site'] = 'https://www.valentino.com/'
-        print(product)
-        yield product
-
-        price['date'] = date.today()
-
-        price['currency'] = '€'
+        product['date'] = date.today()
+        product['currency'] = '€'
         price1 = response.xpath('//div[@class="item-price"]//span[@class="price"]/'
                                'span[@class="value"]/text()').extract_first()
         if not price1:
@@ -71,10 +67,9 @@ class MySpider(RedisSpider):
         sale_price1 = response.xpath('//div[@class="item-price"]//span[@class="discounted price"]'
                                     '/span[@class="value"]/text()').extract_first()
         size1 = response.css('div.item-sizeSelection span.sizeValue::text').extract()
-        price['params'] = {
-            'price' :price1,
-            'size': size1,
-            'sale_price': sale_price1
+        product['price'] = price1
+        product['size'] = size1
+        product['sale_price'] = sale_price1
 
-        }
-        yield price
+        print(product)
+        yield product
