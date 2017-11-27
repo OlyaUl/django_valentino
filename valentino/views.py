@@ -12,7 +12,7 @@ class SpiderView(TemplateView):
         spider = request.POST.get('spider')
         redis = Redis()
         redis.lpush('{0}:start_urls'.format(spider), url1)
-        return redirect('index')
+        return redirect('data')
 
 
 def all_data(request):
