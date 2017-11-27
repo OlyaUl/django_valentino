@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Valetino spider</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+</head>
+<body>
+<table class="table table-hover" id="products" width="100%">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Model</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Material</th>
+        <th>Url</th>
+        <th>Image</th>
+        <th>Site</th>
+        <th>Date</th>
+        <th>Currency</th>
+        <th>Price</th>
+        <th>Size</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Name</th>
+        <th>Model</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Material</th>
+        <th>Url</th>
+        <th>Image</th>
+        <th>Site</th>
+        <th>Date</th>
+        <th>Currency</th>
+        <th>Price</th>
+        <th>Size</th>
+    </tr>
+    </tfoot>
+    <tbody>
+    {% for item in products %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.model }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.material }}</td>
+            <td>{{ item.url }}</td>
+            <td>{{ item.image }}</td>
+            <td>{{ item.site }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.currency }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.size }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
